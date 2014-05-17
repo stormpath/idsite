@@ -305,10 +305,10 @@
     <script type="text/ng-template" id="views/password-error-messages.html">
       <small class="help-block" ng-show="errors.minLength" wd-minLength>Password is too short</small>
       <small class="help-block" ng-show="errors.maxLength" wd-maxLength>Password is too long</small>
-      <small class="help-block" ng-show="errors.digit" wd-digit>Password requires a number</small>
-      <small class="help-block" ng-show="errors.diacritical" wd-diacritical>Password requires a diacriticalical character</small>
-      <small class="help-block" ng-show="errors.upperCase" wd-upperCase>Password requires a uppercase letter</small>
-      <small class="help-block" ng-show="errors.lowerCase" wd-lowerCase>Password requires a lowercase letter</small>
+      <small class="help-block" ng-show="errors.requireNumeric" wd-requireNumeric>Password requires a number</small>
+      <small class="help-block" ng-show="errors.requireDiacritical" wd-requireDiacritical>Password requires a diacritical character</small>
+      <small class="help-block" ng-show="errors.requireUpperCase" wd-requireUpperCase>Password requires a uppercase letter</small>
+      <small class="help-block" ng-show="errors.requireLowerCase" wd-requireLowerCase>Password requires a lowercase letter</small>
     </script>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

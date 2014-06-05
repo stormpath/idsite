@@ -1,4 +1,4 @@
-sso-site
+idsite
 ========
 
-Stormpath Single-Sign-On Static Website
+Stormpath default production Identity Website ('ID Site').

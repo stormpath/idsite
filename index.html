@@ -15,6 +15,15 @@
     <link rel="stylesheet" href="styles/main.css"/>
 
     <script src="scripts/vendor.js"></script>
+    <script type="text/javascript">
+      window.mtConfig = {
+        accountStores:{
+          'cloud A': 'https://api.stormpath.com/v1/directories/5z1NONqqHfZM4vbWl4Rm9b',
+          'cloud B': 'https://api.stormpath.com/v1/directories/28eVLYv1rvxss0AFL5opiR'
+        },
+        defaultLoginUrl: 'http://local.stormpath.com:8001/login'
+      }
+    </script>
   </head>
   <body ng-app="stormpathIdpApp">
     <script type="text/ng-template" id="views/login.html">

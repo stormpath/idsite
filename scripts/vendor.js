@@ -1,5 +1,5 @@
 /*
- Stormpath ID Site v0.2.4
+ Stormpath ID Site v0.3.0
  (c) 2014-2015 Stormpath, Inc. http://stormpath.com
  License: Apache 2.0
 */

@@ -107,10 +107,13 @@
             </div>
             <form class="registration-form form-horizontal sp-form" role="form" ng-controller="RegistrationFormCtrl" ng-submit="submit()">
               <div class="alert alert-danger" ng-show="unknownError">
-                <strong>Sorry, an error occured.  Please return to the previous page and try again.</strong>
+                <strong>Sorry, an error occured.  The message was:</strong>
                 <br/>
                 <br/>
                 <p>{{unknownError}}</p>
+              </div>
+              <div class="alert alert-danger" ng-show="knownError">
+                <p>{{knownError}}</p>
               </div>
               <div class="form-group group-first-name" form-group>
                 <label class="col-sm-4">First Name</label>
@@ -347,6 +350,7 @@
       <small class="help-block" ng-show="errors.minLength" wd-minLength>Password is too short</small>
       <small class="help-block" ng-show="errors.maxLength" wd-maxLength>Password is too long</small>
       <small class="help-block" ng-show="errors.requireNumeric" wd-requireNumeric>Password requires a number</small>
+      <small class="help-block" ng-show="errors.requireSymbol" wd-requireSymbol>Password requires a symbol</small>
       <small class="help-block" ng-show="errors.requireDiacritical" wd-requireDiacritical>Password requires a diacritical character</small>
       <small class="help-block" ng-show="errors.requireUpperCase" wd-requireUpperCase>Password requires a uppercase letter</small>
       <small class="help-block" ng-show="errors.requireLowerCase" wd-requireLowerCase>Password requires a lowercase letter</small>

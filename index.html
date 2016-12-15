@@ -319,6 +319,239 @@
         </div>
       </div>
     </script>
+    <script type="text/ng-template" id="views/mfa-setup.html">
+      <div class="view mfa-view" ng-show="status !== 'loading'" >
+        <div class="overview" ng-if="!factor">
+          <div class="box row">
+            <div class="col-sm-12">
+              <div class="header">
+                <span>Two-Factor Authentication Required</span>
+              </div>
+
+              <div class="sub-header">
+                <span>To protect your account from unauthorized access, we require that you set up an additional factor to verify your identity when logging in. Please choose a method to set up now:</span>
+              </div>
+
+              <div class="factors">
+                <div class="factor {{factor.id}}" ng-repeat="factor in factors" ng-click="selectFactor(factor.id)">
+                  <p class="icon"><img src="/images/factors/{{factor.id}}.png" class="shrink-2x" /></p>
+                  <p class="title">{{factor.title}}</p>
+                  <p class="sub-title">{{factor.subTitle}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sms-factor" ng-if="factor.id === 'sms'">
+          <div class="box row">
+            <div class="col-sm-12">
+              <div class="header">
+                <span>Set Up SMS Authentication</span>
+              </div>
+
+              <div class="sub-header">
+                <span>Enter a phone number that you can receive SMS text messages at. You'll need to have access to this phone when logging into your account.</span>
+              </div>
+
+              <div ng-show="smsFactor.state == 'invalid_phone_number'" class="alert alert-danger">
+                Invalid phone number.
+              </div>
+
+              <div ng-show="smsFactor.state == 'duplicate_phone_number'" class="alert alert-danger">
+                That phone number has already been setup for this account.
+              </div>
+
+              <div>
+                <form ng-submit="createSmsFactor()">
+                  <input placeholder="(555) 123-1234" ng-model="smsFactor.phoneNumber" ng-focus>
+                  <button type="submit">Continue</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="other-options" ng-if="factors.length > 1">
+            <p><a href="/#/mfa/setup/">Choose a Different Method</a></p>
+          </div>
+        </div>
+        <div class="google-authenticator-factor" ng-if="factor.id === 'google-authenticator'">
+          <div class="box row">
+            <div class="col-sm-12">
+              <div class="header">
+                <span>Set Up Google Authenticator</span>
+              </div>
+
+              <div class="sub-step step-1">
+                <div class="header">
+                  <span class="number">1</span>
+                  <span class="description">Install and open Google Authenticator on your mobile device.</span>
+                </div>
+
+                <div class="body">
+                  <p class="screen-mobile">
+                    <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605" target="blank"><img src="/images/app-store-button.png"></a><br><br>
+                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="blank"><img src="/images/google-play-button.png"></a><br>
+                  </p>
+                  <p class="screen-desktop">
+                    <img src="/images/google-authenticator-logo.png"> Search the App Store or Play Store<br>for "Google Authenticator".
+                  </p>
+                </div>
+
+                <hr>
+              </div>
+
+              <div class="sub-step step-2">
+                <div class="header">
+                  <span class="number">2</span>
+                  <span class="description">Add this account to Google Authenticator.</span>
+                </div>
+
+                <div class="body">
+                  <p><img src="/images/plus.png"> Tap the plus icon.</p>
+                  <div class="screen-desktop">
+                    <p><img src="/images/camera.png"> Scan this barcode:</p>
+                    <p><img class="qr-code" data-ng-src="data:image/png;base64,{{googleAuthenticator.base64QRImage}}" /></p>
+                  </div>
+                  <div class="screen-mobile">
+                    <p><img src="/images/edit.png"> Paste in this code:</p>
+                  </div>
+                  <p class="secret">
+                    {{factor.secret}}
+                  </p>
+                </div>
+
+                <hr>
+              </div>
+
+              <div class="sub-step step-3">
+                <div class="header">
+                  <span class="number">3</span>
+                  <span class="description">Enter the code shown in Google Authenticator.</span>
+                </div>
+                <div class="body">
+                  <div ng-show="googleAuthenticator.state == 'invalid_code'" class="alert alert-danger">
+                    Invalid code. Check that you've entered the current code shown in Google Authenticator.
+                  </div>
+                  <div>
+                    <form ng-submit="verifyGoogleAuthenticatorCode()">
+                      <input placeholder="6-digit code" ng-model="googleAuthenticator.code" ng-focus>
+                      <button type="submit">Continue</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="other-options" ng-if="factors.length > 1">
+            <p><a href="/#/mfa/setup/">Choose a Different Method</a></p>
+          </div>
+        </div>
+      </div>
+
+    </script>
+    <script type="text/ng-template" id="views/mfa-verify.html">
+      <div class="view mfa-view" ng-show="status !== 'loading'" >
+        <div class="overview" ng-if="!factor">
+          <div class="box row">
+            <div class="col-sm-12">
+              <div class="header">
+                <span>Verification Required</span>
+              </div>
+
+              <div class="sub-header">
+                <span>Choose a method to verify access to your account:</span>
+              </div>
+
+              <div class="factors">
+                <div class="factor {{factor.id}}" ng-repeat="factor in factors" ng-click="selectFactor(factor.id)">
+                  <p class="icon"><img src="/images/factors/{{factor.id}}.png" class="shrink-2x" /></p>
+                  <p class="title">{{factor.title}}</p>
+                  <p class="sub-title">{{factor.subTitle}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sms-factor" ng-if="factor.id === 'sms'">
+          <div class="box row">
+            <div class="col-sm-12">
+              <div class="header">
+                <span>Verification Required</span>
+              </div>
+              <div class="sub-header">
+                <span>We just sent a code to {{factor.phone.number}}. Enter the code you recieve here.</span>
+              </div>
+
+              <div ng-show="verification.state == 'invalid_code'" class="alert alert-danger">
+                Invalid code. Check that you've entered it correctly.
+              </div>
+
+              <div ng-show="verification.state == 'resent_code'" class="alert alert-info">
+                Replacement code sent.
+              </div>
+
+              <div>
+                <form ng-submit="verifyCode()">
+                  <input placeholder="6-digit code" ng-model="verification.code" ng-focus>
+                  <button type="submit">Continue</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="other-options">
+            <p><a ng-click="resendSmsCode()">Re-send Code</a></p>
+            <p><a ng-click="changeSmsPhoneNumber()" ng-if="isFirstVerification">Change Phone Number</a></p>
+            <p ng-if="otherFactorsAvailable"><a href="/#/mfa/setup/">Choose a Different Method</a></p>
+          </div>
+        </div>
+        <div class="google-authenticator-factor" ng-if="factor.id === 'google-authenticator'">
+          <div class="box row">
+            <div class="col-sm-12">
+              <div class="header">
+                <span>Verification Required</span>
+              </div>
+              <div class="sub-header">
+                <span>
+                  Open your Google Authenticator app on your mobile device and enter the code shown for entry
+                  <strong>{{factor.issuer}}</strong>
+                  (<span>{{factor.accountName}}</span>).
+                </span>
+              </div>
+
+              <div ng-show="verification.state == 'invalid_code'" class="alert alert-danger">
+                Invalid code. Check that you've entered the current code shown in Google Authenticator.
+              </div>
+
+              <div>
+                <form ng-submit="verifyCode()">
+                  <input placeholder="6-digit code" ng-model="verification.code" ng-focus>
+                  <button type="submit">Continue</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </script>
+    <script type="text/ng-template" id="views/mfa-redirect.html">
+      <div class="view mfa-redirect">
+        <div class="icon">
+          <img src="/images/success.png">
+        </div>
+        <div class="header">
+          <span ng-if="source === 'verification'">Verification Successful</span>
+          <span ng-if="source === 'setup'">Additional Factor Verified</span>
+        </div>
+        <p class="description">
+          <span ng-if="source === 'verification'">You'll be redirected to your application shortly.</span>
+          <span ng-if="source === 'setup'">You're all set. You'll be redirected to your application shortly.</span>
+        </p>
+        <p class="spinner">
+          <img src="/images/spinner.gif">
+        </p>
+      </div>
+
+    </script>
     <script type="text/ng-template" id="views/error.html">
       <div class="view error-view">
         <div class="row">

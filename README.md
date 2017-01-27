@@ -27,7 +27,7 @@ branch, modify it, and use it for your custom ID Site.
 
 
 
-[Customizing ID Site]: http://docs.stormpath.com/guides/using-id-site/#customizing-the-default-id-site
+[Customizing ID Site]: https://docs.stormpath.com/console/product-guide/latest/idsite.html#hosting-id-site-yourself
 
 [ID Site Source Repository]: https://github.com/stormpath/idsite-src
 
